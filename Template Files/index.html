@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
+ 		<title>Careta Prisa Workspaces</title>
+        <link rel="stylesheet" href="style.css"/> 
+        <script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/EBLoader.js"></script>
+        <script type="text/javascript" src="js/core.js"></script>
+        <script>
+        	var expandBtn, delayTimeout = null;
+			function initEB(){
+				if (!EB.isInitialized()) {
+					EB.addEventListener(EBG.EventName.EB_INITIALIZED, startAd);
+				}else {
+					startAd();
+				}
+			}
+			
+			function startAd() {
+				expandBtn = document.getElementById("expandBtn");
+				if (is_touch_device() === false) {
+					expandBtn.addEventListener("mouseover", onMouseOverConfig);
+					expandBtn.addEventListener("click", function(){
+					    EB.clickthrough("click_BannerContraido");
+					});
+				}else{
+					expandBtn.addEventListener("click", function(){
+						EB.expand({panelName: "userPanel",
+							      actionType: "User"});
+					});
+				}
+			}
+
+			function is_touch_device() {
+			 return (('ontouchstart' in window)
+			      || (navigator.MaxTouchPoints > 0)
+			      || (navigator.msMaxTouchPoints > 0));
+			}
+
+			function onMouseOverConfig(event){
+				expandBtn.addEventListener("mouseout",isReallyOutBanner);
+				if(delayTimeout === null){
+					delayTimeout = setTimeout(function(){
+						delayTimeout = null;
+						EB.expand({panelName: "userPanel",
+				                  actionType: "User"});
+					},1000);
+				}
+			}
+			function isReallyOutBanner(event){
+				if(event.clientX>=980 || event.clientX<=0 || event.clientY>=90 || event.clientY<=0){
+			        clearTimeout(delayTimeout);
+					delayTimeout = null;
+			    	expandBtn.removeEventListener("mouseout",isReallyOutBanner);
+			    }
+			}
+		</script>
+	</head>
+ 
+	<body onLoad="initEB()">
+        <div id="banner">
+        	<button id="expandBtn"></button>
+            <img src="images/980x90.jpg" alt="bgImage">
+        </div>
+	</body>
+</html>
+

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html> <html>
+	<head>
+		<meta charset="utf-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
+		<title>Careta Prisa Panel Autmático</title>
+        <link rel="stylesheet" href="style.css"/> 
+        <script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/EBLoader.js"></script>
+        <script type="text/javascript" src="../js/core.js"> </script>
+        
+		<script>
+			var clickBtn;
+
+			function initEB(){
+				if (!EB.isInitialized()) {
+					EB.addEventListener(EBG.EventName.EB_INITIALIZED, startAd);
+				}else {
+					startAd();
+				}
+			}
+			
+			function startAd() {
+				clickBtn = document.getElementById("clickthroughButton");
+
+				clickBtn.addEventListener('click',function(){
+					EB.clickthrough("click_panelAutomatico");
+				})
+
+				document.getElementById("closeButton").onclick=function(){
+					collapsePanel("autoPanel");
+				}
+				if (is_touch_device() === false) {
+					clickBtn.addEventListener("mouseout", isReallyOutBanner);
+				}
+				setTimeout(function(){ collapsePanel("autoPanel");}, 8000);
+			}
+
+			function is_touch_device() {
+			 return (('ontouchstart' in window)
+			      || (navigator.MaxTouchPoints > 0)
+			      || (navigator.msMaxTouchPoints > 0));
+			}
+
+			function isReallyOutBanner(event){
+				if(event.clientX>=1005 || event.clientX<=0 || event.clientY>=1000 || event.clientY<=0){
+							EB.collapse({panelName: "autoPanel",
+						                actionType: "User"});
+			    }
+			}	
+
+			
+		</script>
+	</head>
+	<body onLoad="initEB()">
+		<div id="expansion">
+			<button id="closeButton" class="button">X | CERRAR</button>
+			<button id="clickthroughButton" class="button"></button>
+			<img src="../images/panelAuto.jpg" alt="bgPanelAuto">
+		</div>
+	</body>
+</html>
+

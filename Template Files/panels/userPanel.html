@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html> <html>
+	<head>
+		<meta charset="utf-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
+		<title>Careta Prisa Panel Usuario</title>
+        <link rel="stylesheet" href="style.css"/>
+        <script>EBModulesToLoad = ['Video', 'EBCMD'];</script>
+        <script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/EBLoader.js"></script>
+        <script type="text/javascript" src="../js/core.js"></script>
+        
+		<script>
+			var video,clickBtn;
+
+			function initEB(){
+				if (!EB.isInitialized()) {
+					EB.addEventListener(EBG.EventName.EB_INITIALIZED, startAd);
+				}else {
+					startAd();
+				}
+			}
+			
+			function startAd() {
+				
+
+				document.getElementById("closeButton").onclick=function(){
+					collapsePanel("userPanel");
+				}
+
+				clickBtn = document.getElementById("clickthroughButton");
+				clickBtn.addEventListener('click',function(){
+					EB.clickthrough("click_panelUsuario");
+				})
+
+				if (is_touch_device() === false) {
+					clickBtn.addEventListener("mouseout", isReallyOutBanner);
+				}
+
+				initVideo();
+			}
+
+			function is_touch_device() {
+			 return (('ontouchstart' in window)
+			      || (navigator.MaxTouchPoints > 0)
+			      || (navigator.msMaxTouchPoints > 0));
+			}
+
+			function isReallyOutBanner(event){
+				if(event.clientX>=1005 || event.clientX<=0 || event.clientY>=1000 || event.clientY<=0){
+							EB.collapse({panelName: "userPanel",
+						                actionType: "User"});
+			    }
+			}
+
+			function initVideo(){
+				video = document.getElementById("video");
+				var videoTrackingModule = new EBG.VideoModule(video);
+				videoTrackingModule.playVideo("auto");
+			}
+			
+		</script>
+	</head>
+	<body onLoad="initEB()">
+		<div id="expansion">
+			<button id="closeButton" class="button">X | CERRAR</button>
+			<button id="clickthroughButton" class="button"></button>
+			<img src="../images/panelUser.jpg" alt="bgPanelUser">
+
+			<div id="videoContainer" class="video-container centered">
+				<video id="video" controls muted poster="../images/poster.jpg">
+					<source src="../videos/video.mp4" type="video/mp4">
+					<source src="../videos/video.webm" type="video/webm">
+					Tu explorador no soporta video.
+				</video>
+			</div>
+		</div>
+	</body>
+</html>
+
