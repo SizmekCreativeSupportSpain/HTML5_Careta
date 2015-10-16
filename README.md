@@ -11,7 +11,7 @@ Esta plantilla tiene implementada la funcionalidad para lanzar el panel automát
 
 ## Configuración 
 
-Para editar el tamaño, el tiempo de delay para la expansión del panel de usuario y el de auto cierre del panel automático se configuran en el fichero *config.js* que se encuentra en el directorio raíz.
+Para cambiar el tamaño de los elementos del formato, el tiempo de delay para la expansión del panel de usuario o el de auto cierre del panel automático, modifica los valores del fichero *config.js* que se encuentra en el directorio raíz de la plantilla.
 
 ```
 var adConfig = {
@@ -26,6 +26,15 @@ var adConfig = {
 };
 ```
 
+Una vez configurado esto ya puedes trabajar tu creatividad sobre la plantilla.
+
+La expansión del formato no se puede probar en local, es necesario subir la pieza a la [Plataforma de Sizmek](https://platform.mediamind.com) para poder revisar que todo funciona correctamente.
+
+Cuando tengas terminada la creatividad, sube la pieza a la plataforma. En este caso, el formato que debes seleccionar en la plataforma es ** HTML5 EXPANDABLE BANNER **. ¿No tienes claro cómo? Puedes seguir esta pequeña guia [Subir Creatividades Sizmek](http://sizmek.es/wiki/doku.php?id=subir_creatividades_html5).
+
+Tambien tendras que añadir los paneles y darles el tamaño correspondiente. Si tienes que realizar algun cambio despúes de configurar la creatividad y reemplazar alguno de los html de los paneles tendrás que volver a configurar el tamaño de los paneles.
+
+Cuando hayas hecho esto deberias tener algo como en este ejemplo de PRISA:
 
 ![Careta Prisa Setup](https://cloud.githubusercontent.com/assets/15161388/10549741/313276aa-7443-11e5-8c04-3b7df87db5a6.png)
 

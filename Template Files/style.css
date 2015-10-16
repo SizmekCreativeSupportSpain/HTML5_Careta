@@ -1,4 +1,4 @@
-body {
+body,button {
   margin:0px;
   padding:0px;
 }
@@ -6,9 +6,6 @@ body {
 #banner{
   position:absolute;
   display: block;
-  width: 980px;
-  height: 90px;
-  background-color: #000;
 }
 
 #expandBtn{
@@ -17,8 +14,8 @@ body {
   left: 0;
   position: absolute;
   cursor: pointer;
-  width: 980px;
-  height: 90px;
+  width: 100%;
+  height: 100%;
   background-color: transparent;
   border: none;
   outline: none;

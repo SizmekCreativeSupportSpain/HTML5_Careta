@@ -11,6 +11,9 @@
         	var expandBtn, delayTimeout = null;
 
 			function startAd() {
+				var banner = document.getElementById("banner");
+				banner.style.width = adConfig.contraido_width+"px";
+				banner.style.height = adConfig.contraido_height+"px";
 				
 				expandBtn = document.getElementById("expandBtn");
 				if (is_touch_device() === false) {

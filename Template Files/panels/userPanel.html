@@ -13,6 +13,9 @@
 			var video,clickBtn;
 			
 			function startAd() {
+				var panel = document.getElementById("expansion");
+				panel.style.width = adConfig.panel_usuario_width+"px";
+				panel.style.height = adConfig.panel_usuario_height+"px";
 				
 				document.getElementById("closeButton").onclick=function(){
 					EB.collapse({panelName: "userPanel",

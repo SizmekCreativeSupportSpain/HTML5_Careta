@@ -12,6 +12,10 @@
 			var clickBtn;
 			
 			function startAd() {
+				var panel = document.getElementById("expansion");
+				panel.style.width = adConfig.panel_automatico_width+"px";
+				panel.style.height = adConfig.panel_automatico_height+"px";
+
 				clickBtn = document.getElementById("clickthroughButton");
 
 				clickBtn.addEventListener('click',function(){
