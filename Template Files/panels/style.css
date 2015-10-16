@@ -8,6 +8,10 @@ body {
   position:absolute;
   width: 1005px;
   height: 1000px;
+  background-color: #0d2a4d;
+  background-image: url('images/logo.png');
+  background-repeat: no-repeat;
+  background-position: 15px 15px;
 }
 
 .button {

@@ -3,21 +3,15 @@
 	<head>
 		<meta charset="utf-8"/> 
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
- 		<title>Careta Prisa Workspaces</title>
-        <link rel="stylesheet" href="style.css"/> 
-        <script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/EBLoader.js"></script>
-        <script type="text/javascript" src="js/core.js"></script>
+ 		<title>Careta Workspaces</title>
+        <link rel="stylesheet" href="style.css"/>
+        <script type="text/javascript" src="config.js"></script>
+        <script type="text/javascript" src="js/EBLoader.js"></script>
         <script>
         	var expandBtn, delayTimeout = null;
-			function initEB(){
-				if (!EB.isInitialized()) {
-					EB.addEventListener(EBG.EventName.EB_INITIALIZED, startAd);
-				}else {
-					startAd();
-				}
-			}
-			
+
 			function startAd() {
+				
 				expandBtn = document.getElementById("expandBtn");
 				if (is_touch_device() === false) {
 					expandBtn.addEventListener("mouseover", onMouseOverConfig);
@@ -32,12 +26,6 @@
 				}
 			}
 
-			function is_touch_device() {
-			 return (('ontouchstart' in window)
-			      || (navigator.MaxTouchPoints > 0)
-			      || (navigator.msMaxTouchPoints > 0));
-			}
-
 			function onMouseOverConfig(event){
 				expandBtn.addEventListener("mouseout",isReallyOutBanner);
 				if(delayTimeout === null){
@@ -45,23 +33,23 @@
 						delayTimeout = null;
 						EB.expand({panelName: "userPanel",
 				                  actionType: "User"});
-					},1000);
+					},adConfig.delay_expansion);
 				}
 			}
 			function isReallyOutBanner(event){
-				if(event.clientX>=980 || event.clientX<=0 || event.clientY>=90 || event.clientY<=0){
+				if(event.clientX>=adConfig.contraido_width || event.clientX<=0 || event.clientY>=adConfig.contraido_height || event.clientY<=0){
 			        clearTimeout(delayTimeout);
 					delayTimeout = null;
 			    	expandBtn.removeEventListener("mouseout",isReallyOutBanner);
 			    }
 			}
-		</script>
+        </script>
 	</head>
- 
+
 	<body onLoad="initEB()">
         <div id="banner">
         	<button id="expandBtn"></button>
-            <img src="images/980x90.jpg" alt="bgImage">
+            <img src="images/backup.jpg" alt="bgImage" />
         </div>
 	</body>
 </html>
