@@ -1,4 +1,4 @@
-# HTML5 Careta ![Sizmek](http://www.sizmek.es/eb/users/javiegido_/__logos/logo-dark.png "Sizmek")
+# HTML5 Careta <img src="http://www.sizmek.es/eb/users/javiegido_/__logos/logo-dark.png" alt="Sizmek" width="57" height="15" border="10" />
 
 Plantilla genérica con todo lo necesario para crear formatos tipo careta utilizando workspaces de Sizmek.
 
