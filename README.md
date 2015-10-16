@@ -40,4 +40,4 @@ Cuando hayas hecho esto deberias tener algo como en este ejemplo de PRISA:
 
 Recuerda que si tienes cualquier duda puedes ponerte en contacto con el equipo de <a href="mailto:creativesupport-spain@sizmek.com">Soporte Creativo de Sizmek</a>
 
-#
+<hr>
