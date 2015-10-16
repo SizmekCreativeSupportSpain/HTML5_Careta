@@ -11,7 +11,20 @@ Esta plantilla tiene implementada la funcionalidad para lanzar el panel automát
 
 ## Configuración 
 
+Para editar el tamaño, el tiempo de delay para la expansión del panel de usuario y el de auto cierre del panel automático se configuran en el fichero *config.js* que se encuentra en el directorio raíz.
 
+'''
+var adConfig = {
+    "contraido_width": "980",
+    "contraido_height": "90",
+    "panel_automatico_width": "1005",
+    "panel_automatico_height": "1000",
+    "panel_usuario_width": "1005",
+    "panel_usuario_height": "1000",
+    "delay_expansion": "1000", // milisegundos
+    "auto_cierre": "8000" // milisegundos
+};
+'''
 
 
 ![Careta Prisa Setup](https://cloud.githubusercontent.com/assets/15161388/10549741/313276aa-7443-11e5-8c04-3b7df87db5a6.png)
