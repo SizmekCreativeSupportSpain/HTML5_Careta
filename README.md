@@ -13,7 +13,7 @@ Esta plantilla tiene implementada la funcionalidad para lanzar el panel automát
 
 Para cambiar el tamaño de los elementos del formato, el tiempo de delay para la expansión del panel de usuario o el de auto cierre del panel automático, modifica los valores del fichero *config.js* que se encuentra en el directorio raíz de la plantilla.
 
-```
+```javascript
 var adConfig = {
     "contraido_width": "980",
     "contraido_height": "90",
@@ -39,3 +39,5 @@ Cuando hayas hecho esto deberias tener algo como en este ejemplo de PRISA:
 ![Careta Prisa Setup](https://cloud.githubusercontent.com/assets/15161388/10549741/313276aa-7443-11e5-8c04-3b7df87db5a6.png)
 
 Recuerda que si tienes cualquier duda puedes ponerte en contacto con el equipo de <a href="mailto:creativesupport-spain@sizmek.com">Soporte Creativo de Sizmek</a>
+
+#
