@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
 		<title>Careta Panel Automático</title>
         <link rel="stylesheet" href="style.css"/>
-        <script type="text/javascript" src="../config.js"></script>
+        <script type="text/javascript" src="../adConfig.js"></script>
         <script type="text/javascript" src="../js/EBLoader.js"></script>
         
 		<script>
@@ -24,27 +24,23 @@
 
 				document.getElementById("closeButton").onclick = function(){
 					EB.collapse({panelName: "autoPanel",
-				                actionType: "auto"});
+				                actionType: EBG.ActionType.USER});
 				}
 				if (is_touch_device() === false) {
 					clickBtn.addEventListener("mouseout", isReallyOutBanner);
 				}
-				setTimeout(function(){
-					EB.collapse({panelName: "autoPanel",
-				                actionType: "auto"});
-				}, adConfig.auto_cierre);
 			}
 
 			function isReallyOutBanner(event){
 				if(event.clientX>=adConfig.panel_automatico_width || event.clientX<=0 || event.clientY>=adConfig.panel_automatico_height || event.clientY<=0){
 					EB.collapse({panelName: "autoPanel",
-				                actionType: "user"});
+				                actionType: EBG.ActionType.USER});
 			    }
 			}	
 			
 		</script>
 	</head>
-	<body onLoad="initEB()">
+	<body>
 		<div id="expansion">
 			<button id="closeButton" class="button">X | CERRAR</button>
 			<button id="clickthroughButton" class="button"></button>

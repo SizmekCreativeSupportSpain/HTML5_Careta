@@ -5,8 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
  		<title>Careta Workspaces</title>
         <link rel="stylesheet" href="style.css"/>
-        <script type="text/javascript" src="config.js"></script>
+        <script type="text/javascript" src="adConfig.js"></script>
         <script type="text/javascript" src="js/EBLoader.js"></script>
+        <script type="text/javascript" src="js/frequency.js"></script>
+        
         <script>
         	var expandBtn, delayTimeout = null;
 
@@ -24,32 +26,47 @@
 				}else{
 					expandBtn.addEventListener("click", function(){
 						EB.expand({panelName: "userPanel",
-							      actionType: "User"});
+							      actionType: EBG.ActionType.USER});
 					});
 				}
+				setUpAutoExpandFrequencyCapping();
+				window.addEventListener("blur",resetTimeout);
 			}
 
 			function onMouseOverConfig(event){
 				expandBtn.addEventListener("mouseout",isReallyOutBanner);
 				if(delayTimeout === null){
 					delayTimeout = setTimeout(function(){
-						delayTimeout = null;
 						EB.expand({panelName: "userPanel",
-				                  actionType: "User"});
+				                  actionType: EBG.ActionType.USER});
+						resetTimeout();
 					},adConfig.delay_expansion);
 				}
 			}
 			function isReallyOutBanner(event){
 				if(event.clientX>=adConfig.contraido_width || event.clientX<=0 || event.clientY>=adConfig.contraido_height || event.clientY<=0){
-			        clearTimeout(delayTimeout);
-					delayTimeout = null;
+			        resetTimeout();
 			    	expandBtn.removeEventListener("mouseout",isReallyOutBanner);
 			    }
+			}
+			function resetTimeout(){
+				clearTimeout(delayTimeout);
+				delayTimeout = null;
+			}
+
+			function setUpAutoExpandFrequencyCapping() {
+				var autoExpandSettings = {
+					isEnabled: true,
+					frequency: EB.autoExpandFrequencyCapping.Frequencies.DAY,
+					expansionsPerPeriod: 1,
+					timeUntilAutoCollapse: adConfig.auto_cierre
+				};
+				EB.autoExpandFrequencyCapping.initialize(autoExpandSettings);
 			}
         </script>
 	</head>
 
-	<body onLoad="initEB()">
+	<body>
         <div id="banner">
         	<button id="expandBtn"></button>
             <img src="images/backup.jpg" alt="bgImage" />
