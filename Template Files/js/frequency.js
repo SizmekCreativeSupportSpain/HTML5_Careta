@@ -7,6 +7,8 @@
 	var setTimeout = window.setTimeout;
 	var clearTimeout = window.clearTimeout;
 
+	EBG.log.setLevel(0);
+
 	EB.autoExpandFrequencyCapping = new AutoExpandFrequencyCapping();
 
 	function AutoExpandFrequencyCapping() {
@@ -110,10 +112,6 @@
 			EBG.log.debug("Auto expanding");
 
 			_dispatchEvent(_referenceToThis.Events.AUTO_EXPAND, _referenceToThis.EventTiming.BEFORE);
-
-			// var expansionParams = EB._isServingMode() ? EB._adConfig.expansionParams : {};
-			// expansionParams.actionType = EBG.ActionType.AUTO;
-			// EB.expand(expansionParams);
 
 			EB.expand({panelName: "autoPanel",
 				      actionType: EBG.ActionType.AUTO});
