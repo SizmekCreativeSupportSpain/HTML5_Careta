@@ -34,7 +34,9 @@
 			}
 
 			function onMouseOverConfig(event){
+				expandBtn.removeEventListener("mouseover", onMouseOverConfig);
 				expandBtn.addEventListener("mouseout",isReallyOutBanner);
+				expandBtn.addEventListener("mouseleave",isReallyOutBanner);
 				if(delayTimeout === null){
 					delayTimeout = setTimeout(function(){
 						EB.expand({panelName: "userPanel",
@@ -47,6 +49,8 @@
 				if(event.clientX>=adConfig.contraido_width || event.clientX<=0 || event.clientY>=adConfig.contraido_height || event.clientY<=0){
 			        resetTimeout();
 			    	expandBtn.removeEventListener("mouseout",isReallyOutBanner);
+			    	expandBtn.removeEventListener("mouseleave",isReallyOutBanner);
+			    	expandBtn.addEventListener("mouseover", onMouseOverConfig);
 			    }
 			}
 			function resetTimeout(){
