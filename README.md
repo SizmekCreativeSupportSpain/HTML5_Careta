@@ -11,7 +11,7 @@ Esta plantilla tiene implementada la funcionalidad para lanzar el panel automát
 
 ## Configuración 
 
-Para cambiar el tamaño de los elementos del formato, el tiempo de delay para la expansión del panel de usuario o el de auto cierre del panel automático, modifica los valores del fichero *config.js* que se encuentra en el directorio raíz de la plantilla.
+Para cambiar el tamaño de los elementos del formato, el tiempo de delay para la expansión del panel de usuario o el de auto cierre del panel automático, modifica los valores del fichero *adConfig.js* que se encuentra en el directorio raíz de la plantilla.
 
 ```javascript
 var adConfig = {
