@@ -36,7 +36,7 @@ Tambien tendras que añadir los paneles y darles el tamaño correspondiente. Si 
 
 Cuando hayas hecho esto deberias tener algo como en este ejemplo de PRISA:
 
-![Careta Prisa Setup](https://cloud.githubusercontent.com/assets/15161388/10549741/313276aa-7443-11e5-8c04-3b7df87db5a6.png)
+![Careta Prisa Setup](https://cloud.githubusercontent.com/assets/15161388/10859039/d2f333a0-7f59-11e5-89b8-b98e6d294d56.png)
 
 Recuerda que si tienes cualquier duda puedes ponerte en contacto con el equipo de <a href="mailto:creativesupport-spain@sizmek.com">Soporte Creativo de Sizmek</a>
 
