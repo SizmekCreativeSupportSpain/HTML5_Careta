@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="style.css"/>
         <script type="text/javascript" src="adConfig.js"></script>
         <script type="text/javascript" src="js/EBLoader.js"></script>
-        <script type="text/javascript" src="js/frequency.min.js"></script>
+        <script type="text/javascript" src="js/frequency.js"></script>
         
         <script>
         	var expandBtn, delayTimeout = null;
@@ -19,7 +19,7 @@
 				
 				expandBtn = document.getElementById("expandBtn");
 				if (is_touch_device() === false) {
-					expandBtn.addEventListener("mouseover", onMouseOverConfig);
+					banner.addEventListener("mouseover", onMouseOverConfig);
 					expandBtn.addEventListener("click", function(){
 					    EB.clickthrough("click_BannerContraido");
 					});
@@ -29,12 +29,24 @@
 							      actionType: EBG.ActionType.USER});
 					});
 				}
-				setUpAutoExpandFrequencyCapping();
+				setTimeout(function(){// prepare frequency capping
+					try{
+						if((EB.browserSupports("localStorage") || (adConfig.frequencyCapping == EB.autoExpandFrequencyCapping.Frequencies.SESSION && EB.browserSupports("sessionStorage"))) && adConfig.hasOwnProperty("frequencyCapping")){
+							if(adConfig.frequencyCapping.toUpperCase() == "UNLIMITED"){
+								autoExpand();
+							}else{
+								setUpAutoExpandFrequencyCapping();
+							}
+						}else{
+							autoExpand();
+						}
+					}catch(err){
+						console.log("Error seteando frecuencia: "+err);
+					}
+				},100);
 			}
 
 			function onMouseOverConfig(event){
-				expandBtn.removeEventListener("mouseover", onMouseOverConfig);
-				expandBtn.addEventListener("mouseout",isReallyOutBanner);
 				expandBtn.addEventListener("mouseleave",isReallyOutBanner);
 				if(delayTimeout === null){
 					delayTimeout = setTimeout(function(){
@@ -47,9 +59,7 @@
 			function isReallyOutBanner(event){
 				if(event.clientX>=adConfig.contraido_width || event.clientX<=0 || event.clientY>=adConfig.contraido_height || event.clientY<=0){
 			        resetTimeout();
-			    	expandBtn.removeEventListener("mouseout",isReallyOutBanner);
 			    	expandBtn.removeEventListener("mouseleave",isReallyOutBanner);
-			    	expandBtn.addEventListener("mouseover", onMouseOverConfig);
 			    }
 			}
 			function resetTimeout(){
@@ -60,11 +70,26 @@
 			function setUpAutoExpandFrequencyCapping() {
 				var autoExpandSettings = {
 					isEnabled: true,
-					frequency: EB.autoExpandFrequencyCapping.Frequencies.DAY,
-					expansionsPerPeriod: 1,
-					timeUntilAutoCollapse: adConfig.auto_cierre
+					frequency: EB.autoExpandFrequencyCapping.Frequencies[adConfig.frequencyCapping.toUpperCase()],
+					expansionsPerPeriod: 1
 				};
+
+				var beforeAutoExpandSubscription = new EB.autoExpandFrequencyCapping.EventSubscription({
+					eventName: EB.autoExpandFrequencyCapping.Events.AUTO_EXPAND, 
+					callback: autoExpand, 
+					callbackBinding: this, 
+					timing: EB.autoExpandFrequencyCapping.EventTiming.BEFORE
+				});
+				EB.autoExpandFrequencyCapping.subscribeToEvent(beforeAutoExpandSubscription);
 				EB.autoExpandFrequencyCapping.initialize(autoExpandSettings);
+			}
+
+			function autoExpand(){
+				setTimeout(function(){
+					EB.expand({panelName: "autoPanel",
+				                  actionType: EBG.ActionType.AUTO});
+				}, 500);
+				
 			}
         </script>
 	</head>
