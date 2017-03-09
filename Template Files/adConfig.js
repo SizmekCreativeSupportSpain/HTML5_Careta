@@ -7,8 +7,8 @@ var adConfig = {
     panel_usuario_height: 1000,
     delay_expansion: 1000,// milisegundos
     auto_cierre: 8000,    // milisegundos
-    autoExpand: false,
-    autoExpandFrequency: 10
+    autoExpand: true,
+    autoExpandFrequency: 1
 };
 
 

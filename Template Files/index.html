@@ -41,7 +41,7 @@
 		if (localStorage.getItem(itemName) === null) {
 			localStorage.setItem(itemName, new Date());
 		}
-		if(checkAutoExpandFrequency()){
+		if(adConfig.autoExpand === true && checkAutoExpandFrequency()){
 			autoExpand();
 		}
 	}
