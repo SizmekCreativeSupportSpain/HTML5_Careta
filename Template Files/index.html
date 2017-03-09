@@ -1,104 +1,114 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8"/> 
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
- 		<title>Careta Workspaces</title>
-        <link rel="stylesheet" href="style.css"/>
-        <script type="text/javascript" src="adConfig.js"></script>
-        <script type="text/javascript" src="js/EBLoader.js"></script>
-        <script type="text/javascript" src="js/frequency.js"></script>
-        
-        <script>
-        	var expandBtn, delayTimeout = null;
+<!doctype html> 
+<html> 
+<head> 
+<meta charset="utf-8"/> 
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+<title>HTML5 Careta</title>
+<link rel="stylesheet" href="style.css"/>
+<script>EBModulesToLoad = ['EBCMD'];</script>
+<script type="text/javascript" src="adConfig.js"></script>
+<script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/adKit/adkit.js"></script>
+<script type="text/javascript">
+	var clickBtn, banner, adId , delayTimeout = null;
 
-			function startAd() {
-				var banner = document.getElementById("banner");
-				banner.style.width = adConfig.contraido_width+"px";
-				banner.style.height = adConfig.contraido_height+"px";
-				
-				expandBtn = document.getElementById("expandBtn");
-				if (is_touch_device() === false) {
-					banner.addEventListener("mouseover", onMouseOverConfig);
-					expandBtn.addEventListener("click", function(){
-					    EB.clickthrough("click_BannerContraido");
-					});
-				}else{
-					expandBtn.addEventListener("click", function(){
-						EB.expand({panelName: "userPanel",
-							      actionType: EBG.ActionType.USER});
-					});
-				}
-				setTimeout(function(){// prepare frequency capping
-					try{
-						if((EB.browserSupports("localStorage") || (adConfig.frequencyCapping == EB.autoExpandFrequencyCapping.Frequencies.SESSION && EB.browserSupports("sessionStorage"))) && adConfig.hasOwnProperty("frequencyCapping")){
-							if(adConfig.frequencyCapping.toUpperCase() == "UNLIMITED"){
-								autoExpand();
-							}else{
-								setUpAutoExpandFrequencyCapping();
-							}
-						}else{
-							autoExpand();
-						}
-					}catch(err){
-						console.log("Error seteando frecuencia: "+err);
-					}
-				},100);
-			}
+	function startAd() {
+		banner = document.getElementById("banner");
+		banner.style.width = adConfig.contraido_width+"px";
+		banner.style.height = adConfig.contraido_height+"px";
+		
+		clickBtn = document.getElementById("clickBtn");
 
-			function onMouseOverConfig(event){
-				expandBtn.addEventListener("mouseleave",isReallyOutBanner);
-				if(delayTimeout === null){
-					delayTimeout = setTimeout(function(){
-						EB.expand({panelName: "userPanel",
-				                  actionType: EBG.ActionType.USER});
-						resetTimeout();
-					},adConfig.delay_expansion);
-				}
-			}
-			function isReallyOutBanner(event){
-				if(event.clientX>=adConfig.contraido_width || event.clientX<=0 || event.clientY>=adConfig.contraido_height || event.clientY<=0){
-			        resetTimeout();
-			    	expandBtn.removeEventListener("mouseleave",isReallyOutBanner);
-			    }
-			}
-			function resetTimeout(){
-				clearTimeout(delayTimeout);
-				delayTimeout = null;
-			}
+		if (!is_touch_device()) {
+			banner.addEventListener("mouseenter", onMouseOverConfig);
+			clickBtn.addEventListener("click", function(){
+			    EB.clickthrough("click_BannerContraido");
+			});
+		}else{
+			clickBtn.addEventListener("click", function(){
+				EB.expand({panelName: "userPanel",
+					      actionType: EBG.ActionType.USER});
+			});
+		}
+		try{
+			adId = EB._adConfig.adId;
+		}catch(err){
+			adId = "LocalTest";
+		}
 
-			function setUpAutoExpandFrequencyCapping() {
-				var autoExpandSettings = {
-					isEnabled: true,
-					frequency: EB.autoExpandFrequencyCapping.Frequencies[adConfig.frequencyCapping.toUpperCase()],
-					expansionsPerPeriod: 1
-				};
+		var itemName = adId + "_setDate";
+		if (localStorage.getItem(itemName) === null) {
+			localStorage.setItem(itemName, new Date());
+		}
+		if(adConfig.autoExpand === true && checkAutoExpandFrequency()){
+			autoExpand();
+		}
+	}
 
-				var beforeAutoExpandSubscription = new EB.autoExpandFrequencyCapping.EventSubscription({
-					eventName: EB.autoExpandFrequencyCapping.Events.AUTO_EXPAND, 
-					callback: autoExpand, 
-					callbackBinding: this, 
-					timing: EB.autoExpandFrequencyCapping.EventTiming.BEFORE
-				});
-				EB.autoExpandFrequencyCapping.subscribeToEvent(beforeAutoExpandSubscription);
-				EB.autoExpandFrequencyCapping.initialize(autoExpandSettings);
+	function onMouseOverConfig(event){
+		banner.addEventListener("mouseleave",isReallyOutBanner);
+		if(delayTimeout === null){
+			delayTimeout = setTimeout(function(){
+				EB.expand({panelName: "userPanel",
+		                  actionType: EBG.ActionType.USER});
+				resetTimeout();
+			},adConfig.delay_expansion);
+		}
+	}
+	function isReallyOutBanner(event){
+		if(event.clientX >= adConfig.contraido_width || event.clientX <= 0 || event.clientY >= adConfig.contraido_height || event.clientY<=0){
+	        resetTimeout();
+	    	banner.removeEventListener("mouseleave",isReallyOutBanner);
+	    }
+	}
+	function resetTimeout(){
+		clearTimeout(delayTimeout);
+		delayTimeout = null;
+	}
+
+	function checkAutoExpandFrequency(){
+		var itemName = adId + "_autoExpansions";
+		var remainingExpansions = localStorage.getItem(itemName);
+		if (remainingExpansions > 0 || remainingExpansions === null) {
+			remainingExpansions = remainingExpansions === null ? adConfig.autoExpandFrequency -1 : remainingExpansions-1;
+			localStorage.setItem(itemName,remainingExpansions);
+			return true;
+		}else{
+			if (checkCookieDate() === true) {
+				remainingExpansions = adConfig.autoExpandFrequency -1;
+				localStorage.setItem(itemName,remainingExpansions);
+				return true;
 			}
+			return false;
+		}
+		
+	}
 
-			function autoExpand(){
-				setTimeout(function(){
-					EB.expand({panelName: "autoPanel",
-				                  actionType: EBG.ActionType.AUTO});
-				}, 500);
-				
-			}
-        </script>
-	</head>
+	function checkCookieDate(){
+		var itemName = adId + "_setDate";
+		var cookieDate = new Date(localStorage.getItem(itemName));
+		var actualDate = new Date();
+		var diff = (actualDate - cookieDate)/(1000*60*60*24);
+		if (diff >= 1) {
+			localStorage.setItem(itemName,actualDate);
+			return true;
+		}else{
+			return false;
+		}
+	}
 
-	<body>
-        <div id="banner">
-        	<button id="expandBtn"></button>
-            <img src="images/backup.jpg" alt="bgImage" />
-        </div>
-	</body>
+	function autoExpand(){
+		setTimeout(function(){
+			EB.expand({panelName: "autoPanel",
+		              actionType: EBG.ActionType.AUTO});
+		}, 500);
+		
+	}
+</script>
+</head> 
+<body>
+	<div id="banner">
+    	<button id="clickBtn"></button>
+        <img src="images/backup.jpg" alt="bgImage" />
+    </div>
+</body> 
 </html>
-

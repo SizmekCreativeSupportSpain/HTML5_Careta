@@ -2,14 +2,14 @@
 <html>
 	<head>
 		<meta charset="utf-8"/> 
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
 		<title>Careta Panel Automático</title>
         <link rel="stylesheet" href="style.css"/>
         <script type="text/javascript" src="../adConfig.js"></script>
-        <script type="text/javascript" src="../js/EBLoader.js"></script>
+        <script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/adKit/adkit.js"></script>
         
 		<script>
-			var clickBtn;
+			var clickBtn, expansionDiv;
 			
 			function startAd() {
 				var panel = document.getElementById("expansion");
@@ -17,29 +17,35 @@
 				panel.style.height = adConfig.panel_automatico_height+"px";
 
 				clickBtn = document.getElementById("clickthroughButton");
+				expansionDiv = document.getElementById("expansion");
 
 				clickBtn.addEventListener('click',function(){
 					EB.clickthrough("click_panelAutomatico");
 				})
 
-				document.getElementById("closeButton").onclick = function(){
+				document.getElementById("closeButton").addEventListener('click',function(){
 					EB.collapse({panelName: "autoPanel",
 				                actionType: EBG.ActionType.USER});
+				});
+
+				if (!is_touch_device()) {
+					expansionDiv.addEventListener("mouseleave", isReallyOutBanner);
 				}
-				if (is_touch_device() === false) {
-					clickBtn.addEventListener("mouseout", isReallyOutBanner);
-				}
+
+				expansionDiv.style.visibility = 'visible';
 			}
 
 			function isReallyOutBanner(event){
-				if(event.clientX>=adConfig.panel_automatico_width || event.clientX<=0 || event.clientY>=adConfig.panel_automatico_height || event.clientY<=0){
+				if(event.clientX >= adConfig.panel_automatico_width || event.clientX <= 0 || event.clientY >= adConfig.panel_automatico_height || event.clientY <= 0){
 					EB.collapse({panelName: "autoPanel",
 				                actionType: EBG.ActionType.USER});
 			    }
 			}	
 			
-				setTimeout(function(){ EB.collapse({panelName: "autoPanel",
-                    actionType: EBG.ActionType.USER}); }, adConfig.auto_cierre );
+			setTimeout(function(){
+				EB.collapse({panelName: "autoPanel",
+                    		actionType: EBG.ActionType.USER});
+			}, adConfig.auto_cierre );
 			
 		</script>
 	</head>
@@ -47,7 +53,6 @@
 		<div id="expansion">
 			<button id="closeButton" class="button">X | CERRAR</button>
 			<button id="clickthroughButton" class="button"></button>
-			<img src="images/panelAuto.png" alt="bgPanelAuto" class="centered" />
 		</div>
 	</body>
 </html>
