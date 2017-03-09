@@ -19,13 +19,11 @@
 		clickBtn = document.getElementById("clickBtn");
 
 		if (!is_touch_device()) {
-			console.log('!is_touch_device');
 			banner.addEventListener("mouseenter", onMouseOverConfig);
 			clickBtn.addEventListener("click", function(){
 			    EB.clickthrough("click_BannerContraido");
 			});
 		}else{
-			console.log('is_touch_device');
 			clickBtn.addEventListener("click", function(){
 				EB.expand({panelName: "userPanel",
 					      actionType: EBG.ActionType.USER});
@@ -68,7 +66,6 @@
 	}
 
 	function checkAutoExpandFrequency(){
-		console.log('checkAutoExpandFrequency');
 		var itemName = adId + "_autoExpansions";
 		var remainingExpansions = localStorage.getItem(itemName);
 		if (remainingExpansions > 0 || remainingExpansions === null) {
@@ -100,7 +97,6 @@
 	}
 
 	function autoExpand(){
-		console.log('autoExpand');
 		setTimeout(function(){
 			EB.expand({panelName: "autoPanel",
 		              actionType: EBG.ActionType.AUTO});
