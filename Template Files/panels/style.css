@@ -5,10 +5,10 @@ body,button {
 
 #expansion{
   position:absolute;
-  background-color: #0d2a4d;
-  background-image: url('images/logo.png');
+  background-image: url('images/bg.jpg');
   background-repeat: no-repeat;
-  background-position: 15px 15px;
+  background-position: top center;
+  visibility: hidden;
 }
 
 .button {
@@ -31,7 +31,7 @@ body,button {
   font-size: 10px; 
 }
 #closeButton:hover{
-  background-color: #1e79b6;
+  background-color: #00d1c6;
   color:#0d2a4d;
 }
 
@@ -44,7 +44,7 @@ body,button {
   z-index: 2;
 }
 
-.video-container {
+#videoContainer {
   position: absolute;
   width: 640px;
   height: 360px;
