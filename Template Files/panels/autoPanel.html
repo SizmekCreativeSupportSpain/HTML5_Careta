@@ -6,7 +6,7 @@
 		<title>Careta Panel Automático</title>
         <link rel="stylesheet" href="style.css"/>
         <script type="text/javascript" src="../adConfig.js"></script>
-        <script type="text/javascript" src="../js/EBLoader.js"></script>
+        <script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/adKit/adkit.js"></script>
         
 		<script>
 			var clickBtn;
@@ -32,14 +32,16 @@
 			}
 
 			function isReallyOutBanner(event){
-				if(event.clientX>=adConfig.panel_automatico_width || event.clientX<=0 || event.clientY>=adConfig.panel_automatico_height || event.clientY<=0){
+				if(event.clientX >= adConfig.panel_automatico_width || event.clientX <= 0 || event.clientY >= adConfig.panel_automatico_height || event.clientY <= 0){
 					EB.collapse({panelName: "autoPanel",
 				                actionType: EBG.ActionType.USER});
 			    }
 			}	
 			
-				setTimeout(function(){ EB.collapse({panelName: "autoPanel",
-                    actionType: EBG.ActionType.USER}); }, adConfig.auto_cierre );
+			setTimeout(function(){
+				EB.collapse({panelName: "autoPanel",
+                    		actionType: EBG.ActionType.USER});
+			}, adConfig.auto_cierre );
 			
 		</script>
 	</head>
