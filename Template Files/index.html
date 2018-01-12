@@ -10,6 +10,7 @@
 <script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/adKit/adkit.js"></script>
 <script type="text/javascript">
 	var clickBtn, banner, adId , delayTimeout = null;
+	var isJustExpanded = false;
 
 	function startAd() {
 		banner = document.getElementById("banner");
@@ -46,10 +47,14 @@
 
 	function onMouseOverConfig(event){
 		banner.addEventListener("mouseleave",isReallyOutBanner);
-		if(delayTimeout === null){
+		if(delayTimeout === null && !isJustExpanded){
 			delayTimeout = setTimeout(function(){
 				EB.expand({panelName: "userPanel",
 		                  actionType: EBG.ActionType.USER});
+				isJustExpanded = true;
+				setTimeout(function(){
+					isJustExpanded = false;
+				},1500);
 				resetTimeout();
 			},adConfig.delay_expansion);
 		}
